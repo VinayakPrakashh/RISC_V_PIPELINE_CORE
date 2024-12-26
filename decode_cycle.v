@@ -9,7 +9,7 @@ module decode_cycle (
    output [1:0] ResultSrcE
 );
 wire [1:0] ImmSrcD,ResultSrcD;
-wire [31:0] RD1_D,RD2_D,ImmExtD;
+wire [31:0] RD1_D,RD2_D,ImmExtD,rs1,rs2;
 wire RegWriteD,MemWriteD,JumpD,jalrD,BranchD,ALUSrcD;
 wire [2:0] ALUControlD;
 wire [2:0] funct3;
@@ -23,12 +23,14 @@ reg [1:0] ResultSrcD_r;
 reg [4:0] RD_D_r;
 
 controller c(op,funct3,funct7b5,ResultSrcD,MemWriteD,ALUSrcD,RegWriteD,JumpD,jalrD,BranchD,ImmSrcD,ALUControlD);
-reg_file r1(clk,RegWriteW,InstrD[19:15],InstrD[24:20],RdW,ResultW,RD1_D,RD2_D);
+reg_file r1(clk,RegWriteW,rs1,rs2,RdW,ResultW,RD1_D,RD2_D);
 imm_extend imm( InstrD[31:7], ImmSrcD,ImmExtD);
 
 assign funct3 = InstrD[14:12];
 assign funct7b5 = InstrD[30];
 assign op = InstrD[6:0];
+assign rs1 = InstrD[19:15];
+assign rs2 = InstrD[24:20];
 always @(posedge clk or posedge rst) begin
     if(rst) begin
         RD1_D_r <= 0;

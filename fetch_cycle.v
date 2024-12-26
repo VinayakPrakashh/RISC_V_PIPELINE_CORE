@@ -11,7 +11,7 @@ reset_ff PC(clk,rst,PC_F,PCF);
 instr_mem im(PCF,InstrF);
 adder pcadder(PCF,32'h4,PCPlus4F);
 
-always @(posedge clk) begin
+always @(posedge clk or posedge rst) begin
     if(rst==1'b1)begin
         InstrF_reg<=32'h0;
         PCF_reg<=32'h0;
