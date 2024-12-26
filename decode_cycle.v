@@ -12,6 +12,9 @@ wire [1:0] ImmSrcD,ResultSrcD;
 wire [31:0] RD1_D,RD2_D,ImmExtD;
 wire RegWriteD,MemWriteD,JumpD,jalrD,BranchD,ALUSrcD;
 wire [2:0] ALUControlD;
+wire [2:0] funct3;
+wire funct7b5;
+wire [6:0] op;
 
 reg [31:0] RD1_D_r,RD2_D_r,PCD_r,PCPlus4D_r,ImmExtD_r;
 reg RegWriteD_r,MemWriteD_r,JumpD_r,jalrD_r,BranchD_r,ALUSrcD_r;
@@ -19,10 +22,13 @@ reg [2:0] ALUControlD_r;
 reg [1:0] ResultSrcD_r;
 reg [4:0] RD_D_r;
 
-controller c(InstrD[6:0],InstrD[14:12],InstrD[30],ResultSrcD,MemWriteD,ALUSrcD,RegWriteD,JumpD,jalrD,BranchD,ImmSrcD,ALUControlD);
+controller c(op,funct3,funct7b5,ResultSrcD,MemWriteD,ALUSrcD,RegWriteD,JumpD,jalrD,BranchD,ImmSrcD,ALUControlD);
 reg_file r1(clk,RegWriteW,InstrD[19:15],InstrD[24:20],RdW,ResultW,RD1_D,RD2_D);
 imm_extend imm( InstrD[31:7], ImmSrcD,ImmExtD);
 
+assign funct3 = InstrD[14:12];
+assign funct7b5 = InstrD[30];
+assign op = InstrD[6:0];
 always @(posedge clk or posedge rst) begin
     if(rst) begin
         RD1_D_r <= 0;
