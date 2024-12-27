@@ -11,7 +11,7 @@ reg [11:0] controls;
 
 always @(*) begin
     casez (op)
-        // RegWrite_ImmSrc_ALUSrc_MemWrite_ResultSrc_ALUOp_Jump_jalr
+        // RegWrite_ImmSrc_ALUSrc_MemWrite_ResultSrc_ALUOp_Jump_jalr_Branch
         7'b0000011: controls = 12'b1_00_1_0_01_00_0_0_0; // lw
         7'b0100011: controls = 12'b0_01_1_1_00_00_0_0_0; // sw
         7'b0110011: controls = 12'b1_xx_0_0_00_10_0_0_0; // R–type
