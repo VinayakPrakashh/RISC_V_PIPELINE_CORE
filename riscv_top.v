@@ -9,10 +9,10 @@ module riscv_top (
     output [1:0] ResultSrcE
 );
 
-wire [31:0] InstrD,PCD,PCPlus4D;
+wire [31:0] InstrD,PCD,PCPlus4D,InstrE;
 
 fetch_cycle fc(clk,rst,PCSrcE,PCTragetE,InstrD,PCD,PCPlus4D);
 
-decode_cycle dc(clk,rst,RegWriteW,RdW,InstrD,PCD,PCPlus4D,ResultW,RD1_E,RD2_E,ImmExtE,PCE,PCPlus4E,RdE,RegWriteE,MemWriteE,JumpE,jalrE,BranchE,ALUSrcE,ALUControlE,ResultSrcE);
+decode_cycle dc(clk,rst,RegWriteW,RdW,InstrD,PCD,PCPlus4D,ResultW,RD1_E,RD2_E,ImmExtE,PCE,PCPlus4E,InstrE,RdE,RegWriteE,MemWriteE,JumpE,jalrE,BranchE,ALUSrcE,ALUControlE,ResultSrcE);
 
 endmodule
