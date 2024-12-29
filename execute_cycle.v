@@ -7,7 +7,9 @@ module execute_cycle (
     input [1:0] ResultSrcE,
     output [31:0] PCTargetE,WriteDataM,ALUResultM,PCPlus4M,InstrM,
     output [4:0] RdM,
-    output RegWriteM,MemWriteM,ResultSrcM,PCSrcE,JalrE
+    output RegWriteM,MemWriteM,
+    output [1:0] ResultSrcM,
+    output PCSrcE,JalrE
 );
 wire [31:0] SrcBE;
 wire Takebranch,Zero;
