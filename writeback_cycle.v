@@ -27,8 +27,9 @@ always @(posedge clk or posedge rst) begin
         Rd_r<=RdW;
     end
 
+
+end
 assign Result=Result_r;
 assign RegWrite=RegWrite_r;
-assign Rd=RdW_r;
-end
+assign Rd=Rd_r;
 endmodule
