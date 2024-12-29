@@ -1,8 +1,8 @@
 module hazard_unit (
     input rst,RegWriteM,RegWriteW,
     input [4:0]RdM,RdW,
-    input [31:0] rs1_addr_E,rs2_addr_E,
-    input [1:0] ForwardAE,ForwardBE
+    input [4:0] rs1_addr_E,rs2_addr_E,
+    output [1:0] ForwardAE,ForwardBE
 );
 assign ForwardAE = (rst==1'b1)? 2'b00 : 
                    ((RegWriteM ==1'b1) && (RdM != 5'b00000) && (RdM == rs1_addr_E)) ? 2'b10 : 

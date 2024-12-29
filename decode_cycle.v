@@ -7,7 +7,8 @@ module decode_cycle (
    output RegWriteE,MemWriteE,JumpE,jalrE,BranchE,ALUSrcE,
    output [2:0] ALUControlE,
    output [1:0] ResultSrcE,
-   output [4:0] rs1,rs2
+   output [4:0] rs1,rs2,
+   output [31:0] rs1_addr_E,rs2_addr_E
 );
 wire [1:0] ImmSrcD,ResultSrcD;
 wire [31:0] RD1_D,RD2_D,ImmExtD,rs1,rs2;
@@ -22,7 +23,8 @@ reg RegWriteD_r,MemWriteD_r,JumpD_r,jalrD_r,BranchD_r,ALUSrcD_r;
 reg [2:0] ALUControlD_r;
 reg [1:0] ResultSrcD_r;
 reg [4:0] RD_D_r;
-
+reg [4:0] rs1_addr_E_r,rs2_addr_E_r;
+ 
 controller c(op,funct3,funct7b5,ResultSrcD,MemWriteD,ALUSrcD,RegWriteD,JumpD,jalrD,BranchD,ImmSrcD,ALUControlD);
 imm_extend imm( InstrD[31:7], ImmSrcD,ImmExtD);
 
@@ -48,6 +50,8 @@ always @(posedge clk or posedge rst) begin
         ResultSrcD_r <= 0;
         ALUControlD_r <= 0;
         InstrD_r <= 0;
+        rs1_addr_E_r <= 0;
+        rs2_addr_E_r <= 0;
     end
     else begin
         RD1_D_r <= RD1_D;
@@ -65,6 +69,8 @@ always @(posedge clk or posedge rst) begin
         ResultSrcD_r <= ResultSrcD;
         ALUControlD_r <= ALUControlD;
         InstrD_r <= InstrD;
+        rs1_addr_E_r <= rs1;
+        rs2_addr_E_r <= rs2;
     end
 end
 assign RD1_E = RD1_D_r;
@@ -82,5 +88,7 @@ assign ALUSrcE = ALUSrcD_r;
 assign ALUControlE = ALUControlD_r;
 assign ResultSrcE = ResultSrcD_r;
 assign InstrE = InstrD_r;
+assign rs1_addr_E = rs1_addr_E_r;
+assign rs2_addr_E = rs2_addr_E_r;
 
 endmodule

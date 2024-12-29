@@ -9,20 +9,27 @@ module execute_cycle (
     output [4:0] RdM,
     output RegWriteM,MemWriteM,
     output [1:0] ResultSrcM,
-    output PCSrcE,JalrE
+    output PCSrcE,JalrE,
+    input [1:0] ForwardAE,ForwardBE,
+    input [31:0] ResultW
 );
-wire [31:0] SrcBE;
+wire [31:0] SrcBE,SrcBE_F;
 wire Takebranch,Zero;
 wire [31:0] ALUResultE,PCTarget;
+wire [31:0] SrcAE;
 
 reg [31:0] ALUResultE_r,WriteDataE_r,PCTarget_r,PCPlus4E_r,InstrE_r;
 reg [4:0] RdE_r;
 reg RegWriteE_r,MemWriteE_r,ResultSrcE_r,JalrE_r;
 
-mux2 srcmux(RD2_E,ImmExtE,ALUSrcE,SrcBE);
-alu alu_main(RD1_E,SrcBE,ALUControlE,ALUResultE,Zero,InstrE[30],InstrE[12]);
+mux2 srcmux(SrcBE,ImmExtE,ALUSrcE,SrcBE_F);
+alu alu_main(SrcAE,SrcBE_F,ALUControlE,ALUResultE,Zero,InstrE[30],InstrE[12]);
 branching_unit bu(ALUResultE[31],Zero,InstrE[14:12],Takebranch);
 adder pctarget(PCE,ImmExtE,PCTarget);
+
+//hazard forwarding
+mux4 forwarda(RD1_E,ResultW,ALUResultM,32'b0,ForwardAE,SrcAE);
+mux4 forwardb(RD2_E,ResultW,ALUResultM,32'b0,ForwardBE,SrcBE);
 
 assign PCSrcE = (Takebranch & BranchE) | JumpE;
 
@@ -41,7 +48,7 @@ always @(posedge clk or posedge rst) begin
     end
     else begin
         ALUResultE_r <= ALUResultE;
-        WriteDataE_r <= RD2_E;
+        WriteDataE_r <= SrcBE;
         PCPlus4E_r <= PCPlus4E;
         RdE_r <= RdE;
         RegWriteE_r <= RegWriteE;
