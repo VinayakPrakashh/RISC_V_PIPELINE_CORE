@@ -1,12 +1,13 @@
 module decode_cycle (
-   input clk,rst,RegWriteW,
-   input[4:0] RdW,
-   input [31:0] InstrD,PCD,PCPlus4D,ResultW,
+   input clk,rst,
+   input [31:0] InstrD,PCD,PCPlus4D,
+   input [31:0] RD1_D,RD2_D,
    output [31:0] RD1_E,RD2_E,ImmExtE,PCE,PCPlus4E,InstrE,
    output [4:0] RdE,
    output RegWriteE,MemWriteE,JumpE,jalrE,BranchE,ALUSrcE,
    output [2:0] ALUControlE,
-   output [1:0] ResultSrcE
+   output [1:0] ResultSrcE,
+   output [4:0] rs1,rs2
 );
 wire [1:0] ImmSrcD,ResultSrcD;
 wire [31:0] RD1_D,RD2_D,ImmExtD,rs1,rs2;
@@ -23,7 +24,6 @@ reg [1:0] ResultSrcD_r;
 reg [4:0] RD_D_r;
 
 controller c(op,funct3,funct7b5,ResultSrcD,MemWriteD,ALUSrcD,RegWriteD,JumpD,jalrD,BranchD,ImmSrcD,ALUControlD);
-reg_file r1(clk,RegWriteW,rs1,rs2,RdW,ResultW,RD1_D,RD2_D);
 imm_extend imm( InstrD[31:7], ImmSrcD,ImmExtD);
 
 assign funct3 = InstrD[14:12];

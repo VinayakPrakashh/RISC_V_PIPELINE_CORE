@@ -22,12 +22,13 @@ wire [31:0] ReadDataW,ALUResultW,PCPlus4W;
 wire RegWriteW;
 wire [4:0] RdW;
 
-wire [31:0] Result;
+wire [31:0] Result,rs1,rs2;
 wire RegWrite;
-
+wire [31:0] RD1_D,RD2_D;
 fetch_cycle fc(clk,rst,PCSrcE,PCTargetE,InstrD,PCD,PCPlus4D);
 
-decode_cycle dc(clk,rst,RegWrite,Rd,InstrD,PCD,PCPlus4D,Result,RD1_E,RD2_E,ImmExtE,PCE,PCPlus4E,InstrE,RdE,RegWriteE,MemWriteE,JumpE,Jalr,BranchE,ALUSrcE,ALUControlE,ResultSrcE);
+decode_cycle dc(clk,rst,InstrD,PCD,PCPlus4D,RD1_D,RD2_D,RD1_E,RD2_E,ImmExtE,PCE,PCPlus4E,InstrE,RdE,RegWriteE,MemWriteE,JumpE,Jalr,BranchE,ALUSrcE,ALUControlE,ResultSrcE,rs1,rs2);
+reg_file r1(clk,RegWrite,rs1,rs2,Rd,Result,RD1_D,RD2_D);
 
 execute_cycle ec(clk,rst,InstrE,RD1_E,RD2_E,PCE,ImmExtE,PCPlus4E,RdE,RegWriteE,MemWriteE,JumpE,Jalr,BranchE,ALUSrcE,ALUControlE,ResultSrcE,PCTargetE,WriteDataM,ALUResultM,PCPlus4M,InstrM,RdM,RegWriteM,MemWriteM,ResultSrcM,PCSrcE,JalrE);
 
