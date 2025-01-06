@@ -3,9 +3,9 @@ module riscv_top (
 );
 wire [31:0] PCTargetE;
 wire PCSrcE,Jalr;
-wire [31:0] InstrD,PCD,PCPlus4D,InstrE;
+wire  [31:0] InstrD,PCD,PCPlus4D,InstrE;
 
-wire [31:0] PCE,PCPlus4E,ImmExtE,RD1_E,RD2_E;
+wire  [31:0] PCE,PCPlus4E,ImmExtE,RD1_E,RD2_E;
 wire [4:0] RdE;
 wire RegWriteE,MemWriteE,JumpE,BranchE,ALUSrcE;
 wire [2:0] ALUControlE;
@@ -31,7 +31,7 @@ wire [1:0] ForwardAE,ForwardBE;
 fetch_cycle fc(clk,rst,PCSrcE,PCTargetE,InstrD,PCD,PCPlus4D);
 
 decode_cycle dc(clk,rst,InstrD,PCD,PCPlus4D,RD1_D,RD2_D,RD1_E,RD2_E,ImmExtE,PCE,PCPlus4E,InstrE,RdE,RegWriteE,MemWriteE,JumpE,Jalr,BranchE,ALUSrcE,ALUControlE,ResultSrcE,rs1,rs2,rs1_addr_E,rs2_addr_E);
-reg_file r1(clk,RegWrite,rs1,rs2,Rd,Result,RD1_D,RD2_D);
+reg_file r1(clk,RegWriteW,rs1,rs2,RdW,Result,RD1_D,RD2_D);
 
 execute_cycle ec(clk,rst,InstrE,RD1_E,RD2_E,PCE,ImmExtE,PCPlus4E,RdE,RegWriteE,MemWriteE,JumpE,Jalr,BranchE,ALUSrcE,ALUControlE,ResultSrcE,PCTargetE,WriteDataM,ALUResultM,PCPlus4M,InstrM,RdM,RegWriteM,MemWriteM,ResultSrcM,PCSrcE,JalrE,ForwardAE,ForwardBE,Result);
 
@@ -39,6 +39,6 @@ memory_cycle mc(clk,rst,RegWriteM,MemWriteM,ResultSrcM,WriteDataM,ALUResultM,PCP
 
 writeback_cycle wc(clk,rst,RegWriteW,ResultSrcW,ReadDataW,ALUResultW,PCPlus4W,RdW,Result,RegWrite,Rd);
 
-hazard_unit hu(rst,RegWriteM,RegWriteW,RdM,RdW,rs1_addr_E,rs2_addr_E,ForwardAE,ForwardBE);
+hazard_unit hu(rst,RegWriteM,RegWriteW,RdM,Rd,rs1_addr_E,rs2_addr_E,ForwardAE,ForwardBE);
 
 endmodule
