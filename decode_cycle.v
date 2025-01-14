@@ -8,10 +8,11 @@ module decode_cycle (
    output [2:0] ALUControlE,
    output [1:0] ResultSrcE,
    output [4:0] rs1,rs2,
-   output [31:0] rs1_addr_E,rs2_addr_E
+   output [4:0] rs1_addr_E,rs2_addr_E
 );
 wire [1:0] ImmSrcD,ResultSrcD;
-wire [31:0] RD1_D,RD2_D,ImmExtD,rs1,rs2;
+wire [31:0] RD1_D,RD2_D,ImmExtD;
+wire [4:0] rs1,rs2;
 wire RegWriteD,MemWriteD,JumpD,jalrD,BranchD,ALUSrcD;
 wire [2:0] ALUControlD;
 wire [2:0] funct3;
