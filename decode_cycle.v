@@ -39,7 +39,7 @@ assign op = InstrD[6:0];
 assign rs1 = InstrD[19:15];
 assign rs2 = InstrD[24:20];
 always @(posedge clk or posedge rst) begin
-    if(rst) begin
+    if(rst | FlushE) begin
         RD1_D_r <= 0;
         RD2_D_r <= 0;
         RD_D_r <= 0;

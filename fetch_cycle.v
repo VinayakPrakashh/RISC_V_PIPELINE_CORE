@@ -8,7 +8,7 @@ wire [31:0] PC_F,PCF,PCPlus4F,InstrF;
 reg [31:0] InstrF_reg,PCF_reg,PCPlus4F_reg;
 
 mux2 pcmux(PCPlus4F,PCTragetE,PCSrcE,PC_F);
-reset_ff PC(clk,rst,PC_F,PCF);
+reset_ff PC(clk,rst,PC_F,PCF,StallD);
 instr_mem im(PCF,InstrF);
 adder pcadder(PCF,32'h4,PCPlus4F);
 
@@ -18,7 +18,7 @@ always @(posedge clk or posedge rst) begin
         PCF_reg<=32'h0;
         PCPlus4F_reg<=32'h0;
     end
-    else begin
+    else if(!StallF) begin
         InstrF_reg<=InstrF;
         PCF_reg<=PCF;
         PCPlus4F_reg<=PCPlus4F;
