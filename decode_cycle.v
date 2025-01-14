@@ -8,7 +8,9 @@ module decode_cycle (
    output [2:0] ALUControlE,
    output [1:0] ResultSrcE,
    output [4:0] rs1,rs2,
-   output [4:0] rs1_addr_E,rs2_addr_E
+   output [4:0] rs1_addr_E,rs2_addr_E,
+   output [4:0] Rs1D,Rs2D,
+   input FlushE
 );
 wire [1:0] ImmSrcD,ResultSrcD;
 wire [31:0] RD1_D,RD2_D,ImmExtD;
@@ -29,6 +31,8 @@ reg [4:0] rs1_addr_E_r,rs2_addr_E_r;
 controller c(op,funct3,funct7b5,ResultSrcD,MemWriteD,ALUSrcD,RegWriteD,JumpD,jalrD,BranchD,ImmSrcD,ALUControlD);
 imm_extend imm( InstrD[31:7], ImmSrcD,ImmExtD);
 
+assign Rs1D = InstrD[19:15];
+assign Rs2D = InstrD[24:20];
 assign funct3 = InstrD[14:12];
 assign funct7b5 = InstrD[30];
 assign op = InstrD[6:0];

@@ -39,6 +39,6 @@ memory_cycle mc(clk,rst,RegWriteM,MemWriteM,ResultSrcM,WriteDataM,ALUResultM,PCP
 
 writeback_cycle wc(clk,rst,ResultSrcW,ReadDataW,ALUResultW,PCPlus4W,ResultW);
 
-hazard_unit hu(rst,RegWriteM,RegWriteW,RdM,RdW,rs1_addr_E,rs2_addr_E,ForwardAE,ForwardBE);
+hazard_unit hu(rst,RegWriteM,RegWriteW,RdM,RdW,rs1_addr_E,rs2_addr_E,ForwardAE,ForwardBE,);
 
 endmodule

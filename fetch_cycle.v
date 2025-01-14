@@ -1,7 +1,8 @@
 module fetch_cycle (
     input clk,rst,PCSrcE,
     input [31:0] PCTragetE,
-    output [31:0] InstrD,PCD,PCPlus4D
+    output [31:0] InstrD,PCD,PCPlus4D,
+    input StallF,StallD
 );
 wire [31:0] PC_F,PCF,PCPlus4F,InstrF;
 reg [31:0] InstrF_reg,PCF_reg,PCPlus4F_reg;
