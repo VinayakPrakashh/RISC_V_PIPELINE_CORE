@@ -5,7 +5,9 @@ module hazard_unit (
     output [1:0] ForwardAE,ForwardBE,
     input [1:0] ResultSrcE,
     input [4:0] Rs1D,Rs2D,RdE,
-    output StallF,StallD,FlushE
+    output StallF,StallD,FlushE,
+    input PCSrcE,
+    output FlushD
 );
 
 wire lwstall;
@@ -21,5 +23,7 @@ assign lwstall = (ResultSrcE ==2'b01) & ((Rs1D == RdE) | (Rs2D == RdE));
 
 assign StallF = lwstall;
 assign StallD = lwstall;
-assign FlushE = lwstall;
+assign FlushE = lwstall | PCSrcE;
+assign FlushD = PCSrcE;
+
 endmodule

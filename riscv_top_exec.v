@@ -7,9 +7,9 @@ module riscv_top (
     output [4:0] RdM
 );
 wire [31:0] PCTargetE;
+
 wire PCSrcE,Jalr;
 wire [31:0] InstrD,PCD,PCPlus4D,InstrE;
-
 wire [31:0] PCE,PCPlus4E,ImmExtE,RD1_E,RD2_E;
 wire [4:0] RdE;
 wire RegWriteE,MemWriteE,JumpE,BranchE,ALUSrcE;
