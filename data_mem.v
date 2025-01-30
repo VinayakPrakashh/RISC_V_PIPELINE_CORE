@@ -1,5 +1,5 @@
 module data_mem #(
-    parameter DATA_WIDTH = 32,ADDR_WIDTH = 32,MEM_SIZE = 64
+    parameter DATA_WIDTH = 32,ADDR_WIDTH = 32,MEM_SIZE = 256
 ) (
     input clk,wr_en,
     input [2:0] funct3,

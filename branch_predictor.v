@@ -1,8 +1,7 @@
 module branch_predictor (
-    input wire clk,
-    input wire reset,
-    input wire branch_taken,
-    input wire [31:0] pc,
+    input  clk,
+    input  reset,
+    input  branch_taken,
     output reg predict_taken
 );
 

@@ -30,6 +30,9 @@ reg [4:0] rs1_addr_E_r,rs2_addr_E_r;
  
 controller c(op,funct3,funct7b5,ResultSrcD,MemWriteD,ALUSrcD,RegWriteD,JumpD,jalrD,BranchD,ImmSrcD,ALUControlD);
 imm_extend imm( InstrD[31:7], ImmSrcD,ImmExtD);
+adder pcadder2(PCD,32'h4,PCPlus4D_jmp);
+adder pcadder3(PCD,ImmExtD,PC_jmp);
+
 
 assign Rs1D = InstrD[19:15];
 assign Rs2D = InstrD[24:20];
@@ -40,6 +43,25 @@ assign rs1 = InstrD[19:15];
 assign rs2 = InstrD[24:20];
 always @(posedge clk or posedge rst) begin
     if(rst | FlushE) begin
+        RD1_D_r <= 0;
+        RD2_D_r <= 0;
+        RD_D_r <= 0;
+        PCD_r <= 0;
+        PCPlus4D_r <= 0;
+        ImmExtD_r <= 0;
+        RegWriteD_r <= 0;
+        MemWriteD_r <= 0;
+        JumpD_r <= 0;
+        jalrD_r <= 0;
+        BranchD_r <= 0;
+        ALUSrcD_r <= 0;
+        ResultSrcD_r <= 0;
+        ALUControlD_r <= 0;
+        InstrD_r <= 0;
+        rs1_addr_E_r <= 0;
+        rs2_addr_E_r <= 0;
+    end
+       else if( FlushE) begin
         RD1_D_r <= 0;
         RD2_D_r <= 0;
         RD_D_r <= 0;

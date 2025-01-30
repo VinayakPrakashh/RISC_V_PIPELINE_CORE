@@ -20,7 +20,8 @@ wire [31:0] SrcAE;
 
 reg [31:0] ALUResultE_r,WriteDataE_r,PCPlus4E_r,InstrE_r;
 reg [4:0] RdE_r;
-reg RegWriteE_r,MemWriteE_r,ResultSrcE_r,JalrE_r;
+reg RegWriteE_r,MemWriteE_r,JalrE_r;
+reg [1:0] ResultSrcE_r;
 
 mux2 srcmux(SrcBE,ImmExtE,ALUSrcE,SrcBE_F);
 alu alu_main(SrcAE,SrcBE_F,ALUControlE,ALUResultE,Zero,InstrE[30],InstrE[12]);
