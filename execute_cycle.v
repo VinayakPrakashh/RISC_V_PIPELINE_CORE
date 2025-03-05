@@ -11,7 +11,8 @@ module execute_cycle (
     output [1:0] ResultSrcM,
     output PCSrcE,JalrE,
     input [1:0] ForwardAE,ForwardBE,
-    input [31:0] ResultW
+    input [31:0] ResultW,
+    output branch_taken
 );
 wire [31:0] SrcBE,SrcBE_F;
 wire Takebranch,Zero;
@@ -33,7 +34,7 @@ mux4 forwarda(RD1_E,ResultW,ALUResultM,32'b0,ForwardAE,SrcAE);
 mux4 forwardb(RD2_E,ResultW,ALUResultM,32'b0,ForwardBE,SrcBE);
 
 assign PCSrcE = (Takebranch & BranchE) | JumpE;
-
+assign branch_taken = PCSrcE;
 always @(posedge clk or posedge rst) begin
     if(rst==1'b1) begin
         ALUResultE_r <= 0;
