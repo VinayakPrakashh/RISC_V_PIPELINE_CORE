@@ -7,7 +7,7 @@ module instr_mem #(
 reg [DATA_WIDTH-1:0] memory[0:MEM_SIZE-1];
 
 initial begin
-    $readmemh("test.hex",memory); 
+    $readmemh("test2.hex",memory); 
 end
 
 assign instruction_data = memory[instruction_address[31:2]];

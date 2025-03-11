@@ -6,7 +6,7 @@ module controller (
     output       MemWrite,
     output       ALUSrc,
     output       RegWrite, Jump, jalr,Branch,
-    output [1:0] ImmSrc,
+    output [2:0] ImmSrc,
     output [2:0] ALUControl
 	 
 );
