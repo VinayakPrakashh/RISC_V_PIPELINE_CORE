@@ -1,2 +1,8 @@
-# RISC_V_PIPELINE_CORE
-## Currently Working on it
+# RISC V PIPELINE CORE
+ECE S6 Mini Project
+Team Members:
+1)Vinayak Prakaash
+2)Diwa Tomy
+3)Shahal Siyadh MP
+4)Prasoon Pradeep
+
