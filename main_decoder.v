@@ -19,7 +19,7 @@ always @(*) begin
         7'b0010011: controls = 13'b1_000_1_0_00_10_0_0_0; // I–type ALU
 		7'b0010111: controls = 13'b1_100_x_0_11_xx_0_0_0;  // auipc
         7'b0110111: controls = 13'b1_101_x_0_11_xx_0_0_0;  // lui
-		7'b1100111: controls = 13'b1_000_1_0_10_00_0_1_0;  //jalr 
+		7'b1100111: controls = 13'b1_000_1_0_10_10_1_1_0;  //jalr 
         7'b1101111: controls = 13'b1_011_0_0_10_00_1_0_0; // jal
         default:    controls = 13'bx_xxx_0_x_xx_xx_0_0_0; // ???
     endcase
